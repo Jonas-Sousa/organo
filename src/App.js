@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
 
-  const times = [
+  const [times, setTimes] = useState([
     {
       id: uuidv4(),
       nome: 'Programação',
@@ -51,7 +51,7 @@ function App() {
       corPrimaria: '#FFEEDF',
       corSecundaria: '#FF8A29'
     },
-  ]
+  ]);
 
   const inicial = [
     {
@@ -230,6 +230,15 @@ function App() {
     setColaboradores(colaboradores.filter(colaborador => colaborador.id !== id))
   }
 
+  function mudarCorDoTime(cor, nome) {
+    setTimes(times.map(time => {
+      if(time.id === nome) {
+        time.corSecundaria = cor
+      }
+      return time
+    }))
+  }
+
   return (
     <div>
       <Banner />
@@ -238,6 +247,7 @@ function App() {
         <h1>Minha organização</h1>
         {times.map((time, indice) => 
           <Time 
+            mudaCor={mudarCorDoTime}
             key={indice} 
             time={time} 
             colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)}
